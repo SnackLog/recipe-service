@@ -37,7 +37,7 @@ func insertRecipe(db *sql.DB, recipe *models.Recipe) (int, error) {
 }
 
 func insertCustomIngredients(db *sql.DB, recipeId int, customIngredient []models.CustomIngredient) error {
-	query := "INSERT INTO ingredients (recipe_id, ingredient_id, quantity) VALUES ($1, $2, $3)"
+	query := "INSERT INTO custom_ingredients (recipe_id, custom_ingredient_id, quantity) VALUES ($1, $2, $3)"
 	for _, ingredient := range customIngredient {
 		_, err := db.Exec(query, recipeId, ingredient.CustomIngredientId, ingredient.Quantity)
 		if err != nil {
