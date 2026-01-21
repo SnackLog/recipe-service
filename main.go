@@ -50,6 +50,8 @@ func setupRecipeEndpoints(engine *gin.Engine, db *sql.DB) {
 	rc := recipe.RecipeController{DB: db}
 	engine.GET("/recipe/:id", authLib.Authentication, rc.Get)
 	engine.POST("/recipe", authLib.Authentication, rc.Post)
+	engine.PUT("/recipe/:id", authLib.Authentication, rc.Put)
+	engine.DELETE("/recipe/:id", authLib.Authentication, rc.Delete)
 }
 
 func connectDB() *sql.DB {
