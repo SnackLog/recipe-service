@@ -7,13 +7,25 @@ import (
 	"github.com/SnackLog/recipe-service/internal/database/models"
 )
 
-func Insert(db *sql.DB, recipe *models.Recipe) (int, error) {
-	tx, err := db.Begin()
+func InsertWithTransactionAt(tx *sql.Tx, recipe *models.Recipe, id int) error {
+	recipeId, err := insertRecipeAt(tx, recipe, id)
 	if err != nil {
-		return -1, fmt.Errorf("Unable to begin transaction: %v", err)
+		return fmt.Errorf("Unable to insert recipe: %v", err)
 	}
-	defer tx.Rollback()
 
+	err = insertIngredients(tx, recipeId, recipe.Ingredients)
+	if err != nil {
+		return fmt.Errorf("Unable to insert ingredients: %v", err)
+	}
+
+	err = insertCustomIngredients(tx, recipeId, recipe.CustomIngredients)
+	if err != nil {
+		return fmt.Errorf("Unable to insert custom ingredients: %v", err)
+	}
+	return nil
+}
+
+func InsertWithTransaction(tx *sql.Tx, recipe *models.Recipe) (int, error) {
 	recipeId, err := insertRecipe(tx, recipe)
 	if err != nil {
 		return -1, fmt.Errorf("Unable to insert recipe: %v", err)
@@ -28,12 +40,36 @@ func Insert(db *sql.DB, recipe *models.Recipe) (int, error) {
 	if err != nil {
 		return -1, fmt.Errorf("Unable to insert custom ingredients: %v", err)
 	}
+	return recipeId, nil
+}
+
+func Insert(db *sql.DB, recipe *models.Recipe) (int, error) {
+	tx, err := db.Begin()
+	if err != nil {
+		return -1, fmt.Errorf("Unable to begin transaction: %v", err)
+	}
+	defer tx.Rollback()
+
+	recipeId, err := InsertWithTransaction(tx, recipe)
+	if err != nil {
+		return -1, fmt.Errorf("Unable to insert recipe: %v", err)
+	}
 
 	err = tx.Commit()
 	if err != nil {
 		return -1, fmt.Errorf("Unable to commit transaction: %v", err)
 	}
 
+	return recipeId, nil
+}
+
+func insertRecipeAt(tx *sql.Tx, recipe *models.Recipe, id int) (int, error) {
+	var recipeId int
+	query := "INSERT INTO recipes (id, name, unit, username) VALUES ($1, $2, $3, $4) RETURNING id"
+	err := tx.QueryRow(query, id, recipe.Name, recipe.Unit, recipe.Username).Scan(&recipeId)
+	if err != nil {
+		return -1, err
+	}
 	return recipeId, nil
 }
 
