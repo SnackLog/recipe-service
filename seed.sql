@@ -3,10 +3,10 @@ TRUNCATE TABLE custom_ingredients;
 TRUNCATE TABLE recipes CASCADE;
 
 
-INSERT INTO recipes (id, name, unit) VALUES 
-(1, 'Fluffy Pancakes', 'serving'),
-(2, 'Spicy Chicken Stir Fry', 'bowl'),
-(3, 'Classic Lemonade', 'pitcher');
+INSERT INTO recipes (id, name, unit, username) VALUES 
+(1, 'Fluffy Pancakes', 'serving', 'foo'),
+(2, 'Spicy Chicken Stir Fry', 'bowl', 'bar'),
+(3, 'Classic Lemonade', 'pitcher', 'foo');
 
 INSERT INTO ingredients (recipe_id, ingredient_id, quantity) VALUES 
 (1, 101, 200.0),
