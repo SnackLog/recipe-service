@@ -4,6 +4,7 @@ github.com/Microsoft/go-winio v0.6.2 h1:F2VQgta7ecxGYO8k3ZZz3RS8fVIXVxONVUPlNERo
 github.com/Microsoft/go-winio v0.6.2/go.mod h1:yd8OoFMLzJbo9gZq8j5qaps8bJ9aShtEA8Ipt1oGCvU=
 github.com/SnackLog/auth-lib v0.0.2 h1:Dbh6UWffSWqXsEQd+CiiTE4PTvr323XIfepKmHAvBC4=
 github.com/SnackLog/auth-lib v0.0.2/go.mod h1:HK43FNk/8CK7cvogZV3CqYW7oSOy1qsYkEwGypQCTd0=
+github.com/SnackLog/auth-lib v0.1.0/go.mod h1:8jLRr5VmWajWFwQwqQqsCTMCBdl9rVNtkOFOhQb6Kmo=
 github.com/SnackLog/database-config-lib v0.2.0 h1:lnuO/nWfVdR4M6iIDt/6/UE8huMwwzQ/AHY4lw4D40M=
 github.com/SnackLog/database-config-lib v0.2.0/go.mod h1:997JZ6UfTIC+ggf0cYUenAEI+bLhl3csKpnkss12BW8=
 github.com/SnackLog/service-config-lib v0.2.0 h1:LebIe1sBFSK+uUgjHxLQ3qJDZUfTYXr4Rxsm2RBPjZI=
