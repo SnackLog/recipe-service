@@ -1,6 +1,6 @@
 CREATE TABLE ingredients(
     id SERIAL PRIMARY KEY,
-    recipe_id INT REFERENCES recipes(id),
+    recipe_id INT REFERENCES  recipes(id) ON DELETE CASCADE,
     ingredient_id INT NOT NULL,
     quantity FLOAT NOT NULL
 );
@@ -10,7 +10,7 @@ ON ingredients(recipe_id);
 
 CREATE TABLE custom_ingredients(
     id SERIAL PRIMARY KEY,
-    recipe_id INT REFERENCES recipes(id),
+    recipe_id INT REFERENCES recipes(id) ON DELETE CASCADE,
     custom_ingredient_id INT NOT NULL,
     quantity FLOAT NOT NULL
 );
