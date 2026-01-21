@@ -48,6 +48,11 @@ func setupHealthEndpoints(engine *gin.Engine, db *sql.DB) {
 
 func setupRecipeEndpoints(engine *gin.Engine, db *sql.DB) {
 	rc := recipe.RecipeController{DB: db}
+	if serviceConfig.GetConfig().DebugBypassAuthMiddleware {
+		engine.GET("/recipe/:id", rc.Get)
+		engine.POST("/recipe", rc.Post)
+		return
+	}
 	engine.GET("/recipe/:id", authLib.Authentication, rc.Get)
 	engine.POST("/recipe", authLib.Authentication, rc.Post)
 }
