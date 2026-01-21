@@ -34,10 +34,20 @@ func (rc *RecipeController) Put(c *gin.Context) {
 	}
 	defer tx.Rollback()
 
-	err = recipes.DeleteRecipeTx(tx, recipeId, username)
+	result, err := recipes.DeleteRecipeTx(tx, recipeId, username)
 	if err != nil {
 		log.Printf("Error deleting recipe: %v", err)
 		c.JSON(http.StatusInternalServerError, gin.H{"error": "Unable to update recipe"})
+		return
+	}
+	rowsAffected, err := result.RowsAffected()
+	if err != nil {
+		log.Printf("Error getting rows affected: %v", err)
+		c.JSON(http.StatusInternalServerError, gin.H{"error": "Unable to update recipe"})
+		return
+	}
+	if rowsAffected == 0 {
+		c.JSON(http.StatusNotFound, gin.H{"error": "Recipe not found"})
 		return
 	}
 
