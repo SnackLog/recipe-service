@@ -2,6 +2,7 @@ TRUNCATE TABLE ingredients;
 TRUNCATE TABLE custom_ingredients;
 TRUNCATE TABLE recipes CASCADE;
 
+ALTER SEQUENCE recipes_id_seq RESTART WITH 4;
 
 INSERT INTO recipes (id, name, unit, username) VALUES 
 (1, 'Fluffy Pancakes', 'serving', 'foo'),
