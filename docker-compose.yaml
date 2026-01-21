@@ -12,10 +12,10 @@ services:
     volumes:
       - ./seed.sql:/data/seed.sql
     depends_on:
-      auth-service:
+      recipe-service:
         condition: service_healthy
 
-  auth-service:
+  recipe-service:
     container_name: recipe-service
     environment:
       - SERVICE_CONFIG_APP_NAME=SnackLog
@@ -27,12 +27,13 @@ services:
       - DATABASE_CONFIG_DB_PASS=dda4c681-2ab3-48e0-9cf7-0484eef49d9a
       - DATABASE_CONFIG_DB_NAME=recipe_service
       - DATABASE_CONFIG_DISABLE_SSL=true
+      - DEBUG_BYPASS_AUTH_MIDDLEWARE=true
       - GIN_MODE=debug
     build: .
     ports:
       - 8080:80
     depends_on:
-      auth-db:
+      recipe-db:
         condition: service_healthy
     healthcheck:
       test: ["CMD-SHELL", "curl -f http://localhost:80/health || exit 1"]
@@ -41,7 +42,7 @@ services:
       retries: 5
 
   # Postgres Database Service
-  auth-db:
+  recipe-db:
     image: postgres:18
     container_name: recipe-db
     # The credentials below are initial credentials for testing only
@@ -55,7 +56,7 @@ services:
     volumes:
       - ./data/pg/:/var/lib/postgresql/
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U auth_service"]
+      test: ["CMD-SHELL", "pg_isready -U recipe_service"]
       interval: 5s
       timeout: 2s
 

@@ -28,7 +28,6 @@
               gopls
               gotools
               delve
-              mongosh
               go-license-collector.packages.${system}.go-license-collector
             ];
 

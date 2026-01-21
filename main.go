@@ -9,7 +9,9 @@ import (
 	serviceConfig "github.com/SnackLog/service-config-lib"
 	"github.com/gin-gonic/gin"
 
+	authLib "github.com/SnackLog/auth-lib"
 	"github.com/SnackLog/recipe-service/internal/database"
+	"github.com/SnackLog/recipe-service/internal/handlers/recipe"
 	"github.com/SnackLog/recipe-service/internal/health"
 
 	"github.com/golang-migrate/migrate/v4"
@@ -45,7 +47,9 @@ func setupHealthEndpoints(engine *gin.Engine, db *sql.DB) {
 }
 
 func setupRecipeEndpoints(engine *gin.Engine, db *sql.DB) {
-
+	rc := recipe.RecipeController{DB: db}
+	engine.GET("/recipe/:id", authLib.Authentication, rc.Get)
+	engine.POST("/recipe", authLib.Authentication, rc.Post)
 }
 
 func connectDB() *sql.DB {
