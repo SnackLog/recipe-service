@@ -10,7 +10,7 @@ import (
 func Insert(db *sql.DB, recipe *models.Recipe) (int, error) {
 	recipeId, err := insertRecipe(db, recipe)
 	if err != nil {
-		return -1, fmt.Errorf("Unable to recipe ingredients: %v", err)
+		return -1, fmt.Errorf("Unable to insert recipe: %v", err)
 	}
 
 	err = insertIngredients(db, recipeId, recipe.Ingredients)
