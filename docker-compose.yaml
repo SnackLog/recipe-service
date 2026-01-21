@@ -56,7 +56,7 @@ services:
     volumes:
       - ./data/pg/:/var/lib/postgresql/
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U auth_service"]
+      test: ["CMD-SHELL", "pg_isready -U recipe_service"]
       interval: 5s
       timeout: 2s
 
