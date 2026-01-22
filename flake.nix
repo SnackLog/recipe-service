@@ -28,6 +28,7 @@
               gopls
               gotools
               delve
+              go-swag
               go-license-collector.packages.${system}.go-license-collector
             ];
 
