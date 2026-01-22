@@ -30,7 +30,7 @@ func GetById(db *sql.DB, id int) (*models.Recipe, error) {
 	return recipe, nil
 }
 
-// getRecipe aquires a recipe object from db using id
+// getRecipe acquires a recipe object from db using id
 func getRecipe(db *sql.DB, id int) (*models.Recipe, error) {
 	var recipe models.Recipe
 	query := "SELECT id, name, unit, created_at, username FROM recipes WHERE id = $1"

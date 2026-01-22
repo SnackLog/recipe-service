@@ -66,7 +66,7 @@ func Insert(db *sql.DB, recipe *models.Recipe) (int, error) {
 	return recipeId, nil
 }
 
-// insertRecipeAt utilitzes tx to insert a recipe at id, will not handle ingredients
+// insertRecipeAt utilizes tx to insert a recipe at id, will not handle ingredients
 func insertRecipeAt(tx *sql.Tx, recipe *models.Recipe, id int) (int, error) {
 	var recipeId int
 	query := "INSERT INTO recipes (id, name, unit, username) VALUES ($1, $2, $3, $4) RETURNING id"

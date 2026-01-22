@@ -10,7 +10,7 @@ func DeleteRecipeTx(tx *sql.Tx, recipeID int, username string) (sql.Result, erro
 	return result, err
 }
 
-// DeleteRecipe Atomicaly deletes a recipe with id recipeID belonging to username
+// DeleteRecipe Atomically deletes a recipe with id recipeID belonging to username
 func DeleteRecipe(db *sql.DB, recipeID int, username string) (sql.Result, error) {
 	// Delete the recipe from the recipes table, cascading deletes will handle related entries
 	query := "DELETE FROM recipes WHERE id = $1 AND username = $2"

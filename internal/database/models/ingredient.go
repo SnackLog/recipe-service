@@ -7,7 +7,7 @@ type Ingredient struct {
 	Quantity     float64 `db:"quantity" json:"quantity" binding:"required,gt=0"`
 }
 
-// CustomIngredient a custom ingredient in DB and requests, represents a user-defined ingredient 
+// CustomIngredient a custom ingredient in DB and requests, represents a user-defined ingredient
 type CustomIngredient struct {
 	Id                 int     `db:"id" json:"-"`
 	CustomIngredientId int     `db:"custom_ingredient_id" json:"custom_ingredient_id" binding:"required,min=1"`
