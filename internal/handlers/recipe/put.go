@@ -11,6 +11,18 @@ import (
 )
 
 // Put handles PUT /recipe/:id requests to update an existing recipe in-place
+// @Summary Update a recipe
+// @Description Updates an existing recipe by ID for the authenticated user.
+// @Tags recipe
+// @Accept json
+// @Produce json
+// @Param id path int true "Recipe ID"
+// @Param recipe body models.Recipe true "Recipe object"
+// @Success 204 "No Content"
+// @Failure 400 {object} map[string]string
+// @Failure 404 {object} map[string]string
+// @Failure 500 {object} map[string]string
+// @Router /recipe/{id} [put]
 func (rc *RecipeController) Put(c *gin.Context) {
 	var recipe models.Recipe
 	username := c.GetString("username")
