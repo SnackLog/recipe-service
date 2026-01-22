@@ -1,4 +1,4 @@
-basePath: /api/
+basePath: /api/v1
 definitions:
   models.CustomIngredient:
     properties:
@@ -201,25 +201,4 @@ paths:
       summary: Update a recipe
       tags:
       - recipe
-  /recipe/health:
-    get:
-      description: Checks service health and database connection.
-      produces:
-      - application/json
-      responses:
-        "200":
-          description: OK
-          schema:
-            additionalProperties:
-              type: string
-            type: object
-        "500":
-          description: Internal Server Error
-          schema:
-            additionalProperties:
-              type: string
-            type: object
-      summary: Health check
-      tags:
-      - health
 swagger: "2.0"

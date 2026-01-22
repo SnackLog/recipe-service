@@ -70,38 +70,6 @@ const docTemplate = `{
                 }
             }
         },
-        "/recipe/health": {
-            "get": {
-                "description": "Checks service health and database connection.",
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "health"
-                ],
-                "summary": "Health check",
-                "responses": {
-                    "200": {
-                        "description": "OK",
-                        "schema": {
-                            "type": "object",
-                            "additionalProperties": {
-                                "type": "string"
-                            }
-                        }
-                    },
-                    "500": {
-                        "description": "Internal Server Error",
-                        "schema": {
-                            "type": "object",
-                            "additionalProperties": {
-                                "type": "string"
-                            }
-                        }
-                    }
-                }
-            }
-        },
         "/recipe/{id}": {
             "get": {
                 "description": "Retrieves a recipe by ID for the authenticated user.",
@@ -347,7 +315,7 @@ const docTemplate = `{
 var SwaggerInfo = &swag.Spec{
 	Version:          "1.0",
 	Host:             "",
-	BasePath:         "/api/",
+	BasePath:         "/api/v1",
 	Schemes:          []string{},
 	Title:            "Recipe API for SnackLog",
 	Description:      "SnackLog API for managing recipes created by users",

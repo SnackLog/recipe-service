@@ -23,7 +23,7 @@ import (
 // @title Recipe API for SnackLog
 // @version 1.0
 // @description SnackLog API for managing recipes created by users
-// @BasePath /api/
+// @BasePath /api/v1
 func main() {
 	loadConfigs()
 	migrateDatabase()
