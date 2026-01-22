@@ -31,6 +31,7 @@ func main() {
 
 }
 
+// setupEndpoints sets up endpoints for the gin router engine
 func setupEndpoints(db *sql.DB) {
 	engine := gin.Default()
 
@@ -41,11 +42,13 @@ func setupEndpoints(db *sql.DB) {
 
 }
 
+// setupHealthEndpoints sets up the healthcheck endpoint
 func setupHealthEndpoints(engine *gin.Engine, db *sql.DB) {
 	hc := health.HealthController{DB: db}
 	engine.GET("/health", hc.GetHealthStatus)
 }
 
+// setupRecipeEndpoints sets up the recipe endpoints
 func setupRecipeEndpoints(engine *gin.Engine, db *sql.DB) {
 	rc := recipe.RecipeController{DB: db}
 	engine.GET("/recipe/:id", authLib.Authentication, rc.Get)
@@ -54,6 +57,7 @@ func setupRecipeEndpoints(engine *gin.Engine, db *sql.DB) {
 	engine.DELETE("/recipe/:id", authLib.Authentication, rc.Delete)
 }
 
+// connectDB connects to the DB and returns the *sql.DB object returned
 func connectDB() *sql.DB {
 	db, err := database.Connect(databaseConfig.GetDatabaseConnectionString())
 	if err != nil {
@@ -62,6 +66,7 @@ func connectDB() *sql.DB {
 	return db
 }
 
+// migrateDatabase performs database migrations and panics if they are unsuccessful
 func migrateDatabase() {
 	err := doMigrations()
 	if err != nil {
@@ -69,6 +74,7 @@ func migrateDatabase() {
 	}
 }
 
+// loadConfigs loads the configurations for service and database from ENV
 func loadConfigs() {
 	err := serviceConfig.LoadConfig()
 	if err != nil {

@@ -9,6 +9,7 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
+// Get handles GET /recipe/:id requests to retrieve a recipe by ID
 func (rc *RecipeController) Get(c *gin.Context) {
 	idParam := c.Param("id")
 	username := c.GetString("username")
