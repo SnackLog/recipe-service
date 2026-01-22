@@ -17,8 +17,10 @@ import (
 // @Param id path int true "Recipe ID"
 // @Success 204 "No Content"
 // @Failure 400 {object} map[string]string
+// @Failure 401 {object} map[string]string
 // @Failure 404 {object} map[string]string
 // @Failure 500 {object} map[string]string
+// @Security ApiKeyAuth
 // @Router /recipe/{id} [delete]
 func (rc *RecipeController) Delete(c *gin.Context) {
 	username := c.GetString("username")

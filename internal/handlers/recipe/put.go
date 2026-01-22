@@ -20,8 +20,10 @@ import (
 // @Param recipe body models.Recipe true "Recipe object"
 // @Success 204 "No Content"
 // @Failure 400 {object} map[string]string
+// @Failure 401 {object} map[string]string
 // @Failure 404 {object} map[string]string
 // @Failure 500 {object} map[string]string
+// @Security ApiKeyAuth
 // @Router /recipe/{id} [put]
 func (rc *RecipeController) Put(c *gin.Context) {
 	var recipe models.Recipe
