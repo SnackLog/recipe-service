@@ -10,6 +10,16 @@ import (
 )
 
 // Delete handles DELETE /recipe/:id requests to delete a recipe by ID
+// @Summary Delete a recipe
+// @Description Deletes a recipe by ID for the authenticated user.
+// @Tags recipe
+// @Produce json
+// @Param id path int true "Recipe ID"
+// @Success 204 "No Content"
+// @Failure 400 {object} map[string]string
+// @Failure 404 {object} map[string]string
+// @Failure 500 {object} map[string]string
+// @Router /recipe/{id} [delete]
 func (rc *RecipeController) Delete(c *gin.Context) {
 	username := c.GetString("username")
 	recipeID, err := strconv.Atoi(c.Param("id"))

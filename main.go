@@ -20,6 +20,10 @@ import (
 	"github.com/golang-migrate/migrate/v4/source/iofs"
 )
 
+// @title Recipe API for SnackLog
+// @version 1.0
+// @description SnackLog API for managing recipes created by users
+// @BasePath /api/v1
 func main() {
 	loadConfigs()
 	migrateDatabase()

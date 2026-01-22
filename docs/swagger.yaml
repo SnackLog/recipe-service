@@ -1,0 +1,204 @@
+basePath: /api/v1
+definitions:
+  models.CustomIngredient:
+    properties:
+      custom_ingredient_id:
+        minimum: 1
+        type: integer
+      quantity:
+        type: number
+    required:
+    - custom_ingredient_id
+    - quantity
+    type: object
+  models.Ingredient:
+    properties:
+      ingredient_id:
+        minimum: 1
+        type: integer
+      quantity:
+        type: number
+    required:
+    - ingredient_id
+    - quantity
+    type: object
+  models.Recipe:
+    properties:
+      created_at:
+        type: string
+      custom_ingredients:
+        items:
+          $ref: '#/definitions/models.CustomIngredient'
+        type: array
+      ingredients:
+        items:
+          $ref: '#/definitions/models.Ingredient'
+        type: array
+      name:
+        maxLength: 100
+        minLength: 1
+        type: string
+      unit:
+        maxLength: 50
+        minLength: 1
+        type: string
+    required:
+    - name
+    - unit
+    type: object
+info:
+  contact: {}
+  description: SnackLog API for managing recipes created by users
+  title: Recipe API for SnackLog
+  version: "1.0"
+paths:
+  /recipe:
+    post:
+      consumes:
+      - application/json
+      description: Creates a new recipe for the authenticated user.
+      parameters:
+      - description: Recipe object
+        in: body
+        name: recipe
+        required: true
+        schema:
+          $ref: '#/definitions/models.Recipe'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            additionalProperties:
+              type: integer
+            type: object
+        "400":
+          description: Bad Request
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+      summary: Create a recipe
+      tags:
+      - recipe
+  /recipe/{id}:
+    delete:
+      description: Deletes a recipe by ID for the authenticated user.
+      parameters:
+      - description: Recipe ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "204":
+          description: No Content
+        "400":
+          description: Bad Request
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+        "404":
+          description: Not Found
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+      summary: Delete a recipe
+      tags:
+      - recipe
+    get:
+      description: Retrieves a recipe by ID for the authenticated user.
+      parameters:
+      - description: Recipe ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.Recipe'
+        "400":
+          description: Bad Request
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+        "404":
+          description: Not Found
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+      summary: Get a recipe
+      tags:
+      - recipe
+    put:
+      consumes:
+      - application/json
+      description: Updates an existing recipe by ID for the authenticated user.
+      parameters:
+      - description: Recipe ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      - description: Recipe object
+        in: body
+        name: recipe
+        required: true
+        schema:
+          $ref: '#/definitions/models.Recipe'
+      produces:
+      - application/json
+      responses:
+        "204":
+          description: No Content
+        "400":
+          description: Bad Request
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+        "404":
+          description: Not Found
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+      summary: Update a recipe
+      tags:
+      - recipe
+swagger: "2.0"

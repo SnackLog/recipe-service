@@ -10,6 +10,16 @@ import (
 )
 
 // Post handles POST /recipe requests to create a new recipe
+// @Summary Create a recipe
+// @Description Creates a new recipe for the authenticated user.
+// @Tags recipe
+// @Accept json
+// @Produce json
+// @Param recipe body models.Recipe true "Recipe object"
+// @Success 201 {object} map[string]int
+// @Failure 400 {object} map[string]string
+// @Failure 500 {object} map[string]string
+// @Router /recipe [post]
 func (rc *RecipeController) Post(c *gin.Context) {
 	var recipe models.Recipe
 	if err := c.ShouldBindJSON(&recipe); err != nil {

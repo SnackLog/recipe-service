@@ -1,0 +1,18 @@
+*.exe
+*.exe~
+*.dll
+*.so
+*.dylib
+
+.env
+
+# Editor/IDE
+# .idea/
+# .vscode/
+data/
+data-clean/
+docs/
+flake*
+docker-compose.yaml
+LICENSE
+seed.sql
