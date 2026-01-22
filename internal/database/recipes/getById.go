@@ -67,7 +67,7 @@ func populateIngredients(db *sql.DB, id int, recipe *models.Recipe) error {
 	return nil
 }
 
-// populateCustomIngredients Populates CustomIngredients on recipe
+// populateCustomIngredients populates CustomIngredients on recipe
 func populateCustomIngredients(db *sql.DB, id int, recipe *models.Recipe) error {
 	customIngredientQuery := "SELECT id, custom_ingredient_id, quantity FROM custom_ingredients WHERE recipe_id = $1"
 	customRows, err := db.Query(customIngredientQuery, id)

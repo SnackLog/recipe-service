@@ -45,7 +45,7 @@ func InsertWithTransaction(tx *sql.Tx, recipe *models.Recipe) (int, error) {
 	return recipeId, nil
 }
 
-// Insert Atomically inserts a new recipe and returns the new id
+// Insert atomically inserts a new recipe and returns the new id
 func Insert(db *sql.DB, recipe *models.Recipe) (int, error) {
 	tx, err := db.Begin()
 	if err != nil {

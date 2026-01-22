@@ -2,7 +2,7 @@ package models
 
 import "time"
 
-// Recipe A recipe created by the user, which may contain multiple Ingredients or CustomIngredients, as well as some metadata
+// Recipe represents a recipe created by the user, which may contain multiple Ingredients or CustomIngredients, as well as some metadata
 type Recipe struct {
 	Id                int                `db:"id" json:"-"`
 	Name              string             `db:"name" json:"name" binding:"required,min=1,max=100"`
