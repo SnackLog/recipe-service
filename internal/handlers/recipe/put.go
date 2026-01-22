@@ -10,6 +10,7 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
+// Put handles PUT /recipe/:id requests to update an existing recipe in-place
 func (rc *RecipeController) Put(c *gin.Context) {
 	var recipe models.Recipe
 	username := c.GetString("username")

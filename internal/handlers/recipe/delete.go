@@ -9,6 +9,7 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
+// Delete handles DELETE /recipe/:id requests to delete a recipe by ID
 func (rc *RecipeController) Delete(c *gin.Context) {
 	username := c.GetString("username")
 	recipeID, err := strconv.Atoi(c.Param("id"))

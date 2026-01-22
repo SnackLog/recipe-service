@@ -7,6 +7,7 @@ import (
 	"github.com/SnackLog/recipe-service/internal/database/models"
 )
 
+// GetById returns a recipe, including all ingredients with id
 func GetById(db *sql.DB, id int) (*models.Recipe, error) {
 	recipe, err := getRecipe(db, id)
 	if err != nil {
@@ -29,6 +30,7 @@ func GetById(db *sql.DB, id int) (*models.Recipe, error) {
 	return recipe, nil
 }
 
+// getRecipe acquires a recipe object from db using id
 func getRecipe(db *sql.DB, id int) (*models.Recipe, error) {
 	var recipe models.Recipe
 	query := "SELECT id, name, unit, created_at, username FROM recipes WHERE id = $1"
@@ -42,6 +44,7 @@ func getRecipe(db *sql.DB, id int) (*models.Recipe, error) {
 	return &recipe, nil
 }
 
+// populateIngredients populates the ingredients list on recipe
 func populateIngredients(db *sql.DB, id int, recipe *models.Recipe) error {
 	ingredientQuery := "SELECT id, ingredient_id, quantity FROM ingredients WHERE recipe_id = $1"
 	rows, err := db.Query(ingredientQuery, id)
@@ -64,6 +67,7 @@ func populateIngredients(db *sql.DB, id int, recipe *models.Recipe) error {
 	return nil
 }
 
+// populateCustomIngredients populates CustomIngredients on recipe
 func populateCustomIngredients(db *sql.DB, id int, recipe *models.Recipe) error {
 	customIngredientQuery := "SELECT id, custom_ingredient_id, quantity FROM custom_ingredients WHERE recipe_id = $1"
 	customRows, err := db.Query(customIngredientQuery, id)
