@@ -24,6 +24,9 @@ import (
 // @version 1.0
 // @description SnackLog API for managing recipes created by users
 // @BasePath /api/v1
+// @securityDefinitions.apikey ApiKeyAuth
+// @in header
+// @name Authorization
 func main() {
 	loadConfigs()
 	migrateDatabase()

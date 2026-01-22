@@ -17,8 +17,10 @@ import (
 // @Param id path int true "Recipe ID"
 // @Success 200 {object} models.Recipe
 // @Failure 400 {object} map[string]string
+// @Failure 401 {object} map[string]string
 // @Failure 404 {object} map[string]string
 // @Failure 500 {object} map[string]string
+// @Security ApiKeyAuth
 // @Router /recipe/{id} [get]
 func (rc *RecipeController) Get(c *gin.Context) {
 	idParam := c.Param("id")
