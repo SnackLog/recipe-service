@@ -7,7 +7,7 @@ import (
 	"github.com/SnackLog/recipe-service/internal/database/models"
 )
 
-// InsertWithTransactionAt Inserts recipe at id as part of transaction tx
+// InsertWithTransactionAt inserts recipe at id as part of transaction tx
 func InsertWithTransactionAt(tx *sql.Tx, recipe *models.Recipe, id int) error {
 	recipeId, err := insertRecipeAt(tx, recipe, id)
 	if err != nil {
@@ -26,7 +26,7 @@ func InsertWithTransactionAt(tx *sql.Tx, recipe *models.Recipe, id int) error {
 	return nil
 }
 
-// InsertWithTransaction Inserts a new recipe using transaction tx, automatically determines the new ID of the recipe and returns it
+// InsertWithTransaction inserts a new recipe using transaction tx, automatically determines the new ID of the recipe and returns it
 func InsertWithTransaction(tx *sql.Tx, recipe *models.Recipe) (int, error) {
 	recipeId, err := insertRecipe(tx, recipe)
 	if err != nil {
