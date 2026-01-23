@@ -1,1 +1,1 @@
-DROP INDEX IF EXISTS idx_recipe_text_search;
+DROP INDEX IF EXISTS idx_text_search;
