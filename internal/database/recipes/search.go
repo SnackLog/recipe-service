@@ -27,7 +27,7 @@ func Search(db *sql.DB, username, q string) ([]models.Recipe, error) {
 	}
 	defer rows.Close()
 
-	var recipes []models.Recipe
+	var recipeList []models.Recipe
 	log.Println("Scanning rows...")
 	for rows.Next() {
 		var recipe models.Recipe
@@ -35,8 +35,32 @@ func Search(db *sql.DB, username, q string) ([]models.Recipe, error) {
 			return nil, fmt.Errorf("Error scanning recipe row: %v", err)
 		}
 		log.Printf("Found recipe: %+v", recipe)
-		recipes = append(recipes, recipe)
+		recipeList = append(recipeList, recipe)
 	}
 
-	return recipes, nil
+	if rows.Err() != nil {
+		return nil, fmt.Errorf("Error iterating over recipe rows: %v", rows.Err())
+	}
+
+	err = populateRecipeIngredients(recipeList, db)
+	if err != nil {
+		return nil, fmt.Errorf("error populating recipe ingredients: %v", err)
+	}
+
+	return recipeList, nil
+}
+
+func populateRecipeIngredients(recipeList []models.Recipe, db *sql.DB) error {
+	for i := range recipeList {
+		err := populateIngredients(db, recipeList[i].Id, &recipeList[i])
+		if err != nil {
+			return fmt.Errorf("error populating ingredients for recipe %d: %v", recipeList[i].Id, err)
+		}
+		err = populateCustomIngredients(db, recipeList[i].Id, &recipeList[i])
+		if err != nil {
+			return fmt.Errorf("error populating custom ingredients for recipe %d: %v", recipeList[i].Id, err)
+		}
+		log.Printf("Populated recipe: %+v", recipeList[i])
+	}
+	return nil
 }
