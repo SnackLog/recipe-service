@@ -10,7 +10,7 @@ import (
 )
 
 // GetID handles GET /recipe/:id requests to retrieve a recipe by ID
-// @Summary GetID a recipe
+// @Summary Get a recipe by ID
 // @Description Retrieves a recipe by ID for the authenticated user.
 // @Tags recipe
 // @Produce json
