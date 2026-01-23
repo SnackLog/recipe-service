@@ -3,6 +3,7 @@ package recipe
 import (
 	"log"
 	"net/http"
+	"strings"
 
 	"github.com/SnackLog/recipe-service/internal/database/recipes"
 	"github.com/gin-gonic/gin"
@@ -19,7 +20,7 @@ import (
 // @Failure      500 {object} map[string]interface{}
 // @Router       /recipe [get]
 func (rc *RecipeController) Get(c *gin.Context) {
-	q := c.Query("q")
+	q := strings.TrimSpace(c.Query("q"))
 	username := c.GetString("username")
 
 	if q == "" {
