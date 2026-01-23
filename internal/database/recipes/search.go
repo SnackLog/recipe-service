@@ -27,7 +27,8 @@ func Search(db *sql.DB, username, q string) ([]models.Recipe, error) {
 	}
 	defer rows.Close()
 
-	var recipeList []models.Recipe
+	recipeList := make([]models.Recipe, 0)
+
 	log.Println("Scanning rows...")
 	for rows.Next() {
 		var recipe models.Recipe
