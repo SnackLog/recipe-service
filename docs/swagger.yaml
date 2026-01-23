@@ -53,6 +53,36 @@ info:
   version: "1.0"
 paths:
   /recipe:
+    get:
+      description: Search recipes for the authenticated user by query string `q`.
+        The query must be at least 3 characters long.
+      parameters:
+      - description: Search query (minimum 3 characters)
+        in: query
+        name: q
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items: {}
+            type: array
+        "400":
+          description: Bad Request
+          schema:
+            additionalProperties: true
+            type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            additionalProperties: true
+            type: object
+      summary: Search recipes
+      tags:
+      - recipes
     post:
       consumes:
       - application/json
@@ -180,7 +210,7 @@ paths:
             type: object
       security:
       - ApiKeyAuth: []
-      summary: Get a recipe
+      summary: Get a recipe by ID
       tags:
       - recipe
     put:

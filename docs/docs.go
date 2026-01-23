@@ -16,6 +16,48 @@ const docTemplate = `{
     "basePath": "{{.BasePath}}",
     "paths": {
         "/recipe": {
+            "get": {
+                "description": "Search recipes for the authenticated user by query string ` + "`" + `q` + "`" + `. The query must be at least 3 characters long.",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "recipes"
+                ],
+                "summary": "Search recipes",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Search query (minimum 3 characters)",
+                        "name": "q",
+                        "in": "query",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "array",
+                            "items": {}
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "type": "object",
+                            "additionalProperties": true
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "type": "object",
+                            "additionalProperties": true
+                        }
+                    }
+                }
+            },
             "post": {
                 "security": [
                     {
@@ -98,7 +140,7 @@ const docTemplate = `{
                 "tags": [
                     "recipe"
                 ],
-                "summary": "Get a recipe",
+                "summary": "Get a recipe by ID",
                 "parameters": [
                     {
                         "type": "integer",
