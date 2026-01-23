@@ -58,7 +58,8 @@ func setupHealthEndpoints(engine *gin.Engine, db *sql.DB) {
 // setupRecipeEndpoints sets up the recipe endpoints
 func setupRecipeEndpoints(engine *gin.Engine, db *sql.DB) {
 	rc := recipe.RecipeController{DB: db}
-	engine.GET("/recipe/:id", authLib.Authentication, rc.Get)
+	engine.GET("/recipe", authLib.Authentication, rc.Get)
+	engine.GET("/recipe/:id", authLib.Authentication, rc.GetID)
 	engine.POST("/recipe", authLib.Authentication, rc.Post)
 	engine.PUT("/recipe/:id", authLib.Authentication, rc.Put)
 	engine.DELETE("/recipe/:id", authLib.Authentication, rc.Delete)
