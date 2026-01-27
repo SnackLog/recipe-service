@@ -6,6 +6,7 @@ import (
 	"strconv"
 
 	"github.com/SnackLog/recipe-service/internal/database/recipes"
+	"github.com/SnackLog/recipe-service/internal/handlers"
 	"github.com/gin-gonic/gin"
 )
 
@@ -16,10 +17,10 @@ import (
 // @Produce json
 // @Param id path int true "Recipe ID"
 // @Success 200 {object} models.Recipe
-// @Failure 400 {object} map[string]string
-// @Failure 401 {object} map[string]string
-// @Failure 404 {object} map[string]string
-// @Failure 500 {object} map[string]string
+// @Failure 400 {object} handlers.Error
+// @Failure 401 {object} handlers.Error
+// @Failure 404 {object} handlers.Error
+// @Failure 500 {object} handlers.Error
 // @Security ApiKeyAuth
 // @Router /recipe/{id} [get]
 func (rc *RecipeController) GetID(c *gin.Context) {
@@ -27,7 +28,7 @@ func (rc *RecipeController) GetID(c *gin.Context) {
 	username := c.GetString("username")
 	recipeId, err := strconv.Atoi(idParam)
 	if err != nil {
-		c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid recipe ID"})
+		c.JSON(http.StatusBadRequest, handlers.Error{Error: "Invalid recipe ID"})
 		return
 	}
 
@@ -35,11 +36,11 @@ func (rc *RecipeController) GetID(c *gin.Context) {
 
 	if err != nil {
 		log.Println("Error retrieving recipe:", err)
-		c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to retrieve recipe"})
+		c.JSON(http.StatusInternalServerError, handlers.Error{Error: "Failed to retrieve recipe"})
 		return
 	}
 	if recipe == nil || recipe.Username != username {
-		c.JSON(http.StatusNotFound, gin.H{"error": "Recipe not found"})
+		c.JSON(http.StatusNotFound, handlers.Error{Error: "Recipe not found"})
 		return
 	}
 
