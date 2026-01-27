@@ -6,6 +6,7 @@ import (
 	"strings"
 
 	"github.com/SnackLog/recipe-service/internal/database/recipes"
+	"github.com/SnackLog/recipe-service/internal/handlers"
 	"github.com/gin-gonic/gin"
 )
 
@@ -16,27 +17,27 @@ import (
 // @Produce      json
 // @Param        q   query   string  true  "Search query (minimum 3 characters)"
 // @Success      200 {array}  interface{}
-// @Failure      400 {object} map[string]interface{}
-// @Failure      500 {object} map[string]interface{}
+// @Failure      400 {object} handlers.Error
+// @Failure      500 {object} handlers.Error
 // @Router       /recipe [get]
 func (rc *RecipeController) Get(c *gin.Context) {
 	q := strings.TrimSpace(c.Query("q"))
 	username := c.GetString("username")
 
 	if q == "" {
-		c.JSON(http.StatusBadRequest, gin.H{"error": "Query parameter 'q' is required"})
+		c.JSON(http.StatusBadRequest, handlers.Error{Error: "Query parameter 'q' is required"})
 		return
 	}
 
 	if len(q) < 3 {
-		c.JSON(http.StatusBadRequest, gin.H{"error": "Query parameter 'q' must be at least 3 characters long"})
+		c.JSON(http.StatusBadRequest, handlers.Error{Error: "Query parameter 'q' must be at least 3 characters long"})
 		return
 	}
 
 	recipes, err := recipes.Search(rc.DB, username, q)
 	if err != nil {
 		log.Println("Error searching recipes:", err)
-		c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to search recipes"})
+		c.JSON(http.StatusInternalServerError, handlers.Error{Error: "Failed to search recipes"})
 		return
 	}
 

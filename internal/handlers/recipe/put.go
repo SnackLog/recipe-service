@@ -7,6 +7,7 @@ import (
 
 	"github.com/SnackLog/recipe-service/internal/database/models"
 	"github.com/SnackLog/recipe-service/internal/database/recipes"
+	"github.com/SnackLog/recipe-service/internal/handlers"
 	"github.com/gin-gonic/gin"
 )
 
@@ -19,10 +20,10 @@ import (
 // @Param id path int true "Recipe ID"
 // @Param recipe body models.Recipe true "Recipe object"
 // @Success 204 "No Content"
-// @Failure 400 {object} map[string]string
-// @Failure 401 {object} map[string]string
-// @Failure 404 {object} map[string]string
-// @Failure 500 {object} map[string]string
+// @Failure 400 {object} handlers.Error
+// @Failure 401 {object} handlers.Error
+// @Failure 404 {object} handlers.Error
+// @Failure 500 {object} handlers.Error
 // @Security ApiKeyAuth
 // @Router /recipe/{id} [put]
 func (rc *RecipeController) Put(c *gin.Context) {
@@ -31,20 +32,20 @@ func (rc *RecipeController) Put(c *gin.Context) {
 	recipeId, err := strconv.Atoi(c.Param("id"))
 	if err != nil {
 		log.Printf("Error parsing recipe ID: %v", err)
-		c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid recipe ID"})
+		c.JSON(http.StatusBadRequest, handlers.Error{Error: "Invalid recipe ID"})
 		return
 	}
 
 	if err := c.ShouldBindJSON(&recipe); err != nil {
 		log.Printf("Error binding JSON: %v", err)
-		c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid request body"})
+		c.JSON(http.StatusBadRequest, handlers.Error{Error: "Invalid request body"})
 		return
 	}
 
 	tx, err := rc.DB.Begin()
 	if err != nil {
 		log.Printf("Error beginning transaction: %v", err)
-		c.JSON(http.StatusInternalServerError, gin.H{"error": "Unable to begin transaction"})
+		c.JSON(http.StatusInternalServerError, handlers.Error{Error: "Unable to begin transaction"})
 		return
 	}
 	defer tx.Rollback()
@@ -52,17 +53,17 @@ func (rc *RecipeController) Put(c *gin.Context) {
 	result, err := recipes.DeleteRecipeTx(tx, recipeId, username)
 	if err != nil {
 		log.Printf("Error deleting recipe: %v", err)
-		c.JSON(http.StatusInternalServerError, gin.H{"error": "Unable to update recipe"})
+		c.JSON(http.StatusInternalServerError, handlers.Error{Error: "Unable to update recipe"})
 		return
 	}
 	rowsAffected, err := result.RowsAffected()
 	if err != nil {
 		log.Printf("Error getting rows affected: %v", err)
-		c.JSON(http.StatusInternalServerError, gin.H{"error": "Unable to update recipe"})
+		c.JSON(http.StatusInternalServerError, handlers.Error{Error: "Unable to update recipe"})
 		return
 	}
 	if rowsAffected == 0 {
-		c.JSON(http.StatusNotFound, gin.H{"error": "Recipe not found"})
+		c.JSON(http.StatusNotFound, handlers.Error{Error: "Recipe not found"})
 		return
 	}
 
@@ -70,14 +71,14 @@ func (rc *RecipeController) Put(c *gin.Context) {
 	err = recipes.InsertWithTransactionAt(tx, &recipe, recipeId)
 	if err != nil {
 		log.Printf("Error inserting recipe: %v", err)
-		c.JSON(http.StatusInternalServerError, gin.H{"error": "Unable to update recipe"})
+		c.JSON(http.StatusInternalServerError, handlers.Error{Error: "Unable to update recipe"})
 		return
 	}
 
 	err = tx.Commit()
 	if err != nil {
 		log.Printf("Error committing transaction: %v", err)
-		c.JSON(http.StatusInternalServerError, gin.H{"error": "Unable to commit transaction"})
+		c.JSON(http.StatusInternalServerError, handlers.Error{Error: "Unable to commit transaction"})
 		return
 	}
 
