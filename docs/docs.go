@@ -88,10 +88,7 @@ const docTemplate = `{
                     "201": {
                         "description": "Created",
                         "schema": {
-                            "type": "object",
-                            "additionalProperties": {
-                                "type": "integer"
-                            }
+                            "$ref": "#/definitions/recipe.recipePostResponse"
                         }
                     },
                     "400": {
@@ -364,6 +361,14 @@ const docTemplate = `{
                     "type": "string",
                     "maxLength": 50,
                     "minLength": 1
+                }
+            }
+        },
+        "recipe.recipePostResponse": {
+            "type": "object",
+            "properties": {
+                "recipe_id": {
+                    "type": "integer"
                 }
             }
         }
