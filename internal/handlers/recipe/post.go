@@ -10,6 +10,10 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
+type recipePostResponse struct {
+	RecipeID int `json:"recipe_id"`
+}
+
 // Post handles POST /recipe requests to create a new recipe
 // @Summary Create a recipe
 // @Description Creates a new recipe for the authenticated user.
@@ -39,6 +43,6 @@ func (rc *RecipeController) Post(c *gin.Context) {
 		return
 	}
 
-	c.JSON(http.StatusCreated, gin.H{"recipe_id": recipeId})
+	c.JSON(http.StatusCreated, recipePostResponse{RecipeID: recipeId})
 
 }
