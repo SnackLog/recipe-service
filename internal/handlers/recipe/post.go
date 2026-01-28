@@ -21,7 +21,7 @@ type recipePostResponse struct {
 // @Accept json
 // @Produce json
 // @Param recipe body models.Recipe true "Recipe object"
-// @Success 201 {object} map[string]int
+// @Success 201 {object} recipePostResponse
 // @Failure 400 {object} handlers.Error
 // @Failure 401 {object} handlers.Error
 // @Failure 500 {object} handlers.Error
