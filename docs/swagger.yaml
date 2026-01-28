@@ -51,6 +51,11 @@ definitions:
     - name
     - unit
     type: object
+  recipe.recipePostResponse:
+    properties:
+      recipe_id:
+        type: integer
+    type: object
 info:
   contact: {}
   description: SnackLog API for managing recipes created by users
@@ -103,9 +108,7 @@ paths:
         "201":
           description: Created
           schema:
-            additionalProperties:
-              type: integer
-            type: object
+            $ref: '#/definitions/recipe.recipePostResponse'
         "400":
           description: Bad Request
           schema:
