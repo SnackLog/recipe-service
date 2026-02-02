@@ -25,7 +25,13 @@ func (rc *RecipeController) Get(c *gin.Context) {
 	username := c.GetString("username")
 
 	if q == "" {
-		c.JSON(http.StatusBadRequest, handlers.Error{Error: "Query parameter 'q' is required"})
+		recipeList, err := recipes.GetLatest(rc.DB, username, 100)
+		if err != nil {
+			log.Println("Error getting latest recipes:", err)
+			c.JSON(http.StatusInternalServerError, handlers.Error{Error: "Failed to get latest recipes"})
+			return
+		}
+		c.JSON(http.StatusOK, recipeList)
 		return
 	}
 
