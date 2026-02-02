@@ -30,8 +30,7 @@ const docTemplate = `{
                         "type": "string",
                         "description": "Search query (minimum 3 characters)",
                         "name": "q",
-                        "in": "query",
-                        "required": true
+                        "in": "query"
                     }
                 ],
                 "responses": {

@@ -15,7 +15,7 @@ import (
 // @Description  Search recipes for the authenticated user by query string `q`. The query must be at least 3 characters long.
 // @Tags         recipes
 // @Produce      json
-// @Param        q   query   string  true  "Search query (minimum 3 characters)"
+// @Param        q   query   string  false  "Search query (minimum 3 characters)"
 // @Success      200 {array}  interface{}
 // @Failure      400 {object} handlers.Error
 // @Failure      500 {object} handlers.Error
