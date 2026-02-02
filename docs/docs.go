@@ -43,7 +43,9 @@ const docTemplate = `{
                         "description": "OK",
                         "schema": {
                             "type": "array",
-                            "items": {}
+                            "items": {
+                                "$ref": "#/definitions/models.Recipe"
+                            }
                         }
                     },
                     "400": {

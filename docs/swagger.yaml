@@ -77,7 +77,8 @@ paths:
         "200":
           description: OK
           schema:
-            items: {}
+            items:
+              $ref: '#/definitions/models.Recipe'
             type: array
         "400":
           description: Bad Request
