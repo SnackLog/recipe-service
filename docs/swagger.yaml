@@ -70,7 +70,6 @@ paths:
       - description: Search query (minimum 3 characters)
         in: query
         name: q
-        required: true
         type: string
       produces:
       - application/json
