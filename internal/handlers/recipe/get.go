@@ -16,7 +16,7 @@ import (
 // @Tags         recipes
 // @Produce      json
 // @Param        q   query   string  false  "Search query (minimum 3 characters)"
-// @Success      200 {array}  interface{}
+// @Success      200 {array}  models.Recipe
 // @Failure      400 {object} handlers.Error
 // @Failure      500 {object} handlers.Error
 // @Security 	 ApiKeyAuth
