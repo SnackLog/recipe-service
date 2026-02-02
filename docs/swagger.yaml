@@ -65,7 +65,7 @@ paths:
   /recipe:
     get:
       description: Search recipes for the authenticated user by query string `q`.
-        The query must be at least 3 characters long.
+        Optional. If specified, must be at least 3 characters
       parameters:
       - description: Search query (minimum 3 characters)
         in: query
@@ -87,6 +87,8 @@ paths:
           description: Internal Server Error
           schema:
             $ref: '#/definitions/handlers.Error'
+      security:
+      - ApiKeyAuth: []
       summary: Search recipes
       tags:
       - recipes
