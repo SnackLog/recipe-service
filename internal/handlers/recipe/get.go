@@ -19,6 +19,7 @@ import (
 // @Success      200 {array}  interface{}
 // @Failure      400 {object} handlers.Error
 // @Failure      500 {object} handlers.Error
+// @Security 	 ApiKeyAuth
 // @Router       /recipe [get]
 func (rc *RecipeController) Get(c *gin.Context) {
 	q := strings.TrimSpace(c.Query("q"))

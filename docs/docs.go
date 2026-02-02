@@ -17,7 +17,12 @@ const docTemplate = `{
     "paths": {
         "/recipe": {
             "get": {
-                "description": "Search recipes for the authenticated user by query string ` + "`" + `q` + "`" + `. The query must be at least 3 characters long.",
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "description": "Search recipes for the authenticated user by query string ` + "`" + `q` + "`" + `. Optional. If specified, must be at least 3 characters",
                 "produces": [
                     "application/json"
                 ],
