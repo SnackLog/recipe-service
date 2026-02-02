@@ -12,7 +12,7 @@ import (
 
 // GetRecipes godoc
 // @Summary      Search recipes
-// @Description  Search recipes for the authenticated user by query string `q`. The query must be at least 3 characters long.
+// @Description  Search recipes for the authenticated user by query string `q`. Optional. If specified, must be at least 3 characters
 // @Tags         recipes
 // @Produce      json
 // @Param        q   query   string  false  "Search query (minimum 3 characters)"
