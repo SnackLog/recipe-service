@@ -28,15 +28,15 @@ func GetLatest(db *sql.DB, username string, limit int) ([]models.Recipe, error) 
 		return nil, fmt.Errorf("error iterating over recipe rows: %v", err)
 	}
 
-	for _, recipe := range recipes {
-		err = populateIngredients(db, recipe.Id, &recipe)
+	for i := range recipes {
+		err = populateIngredients(db, recipes[i].Id, &recipes[i])
 		if err != nil {
-			return nil, fmt.Errorf("error populating ingredients for recipe %d: %v", recipe.Id, err)
+			return nil, fmt.Errorf("error populating ingredients for recipe %d: %v", recipes[i].Id, err)
 		}
 
-		err = populateCustomIngredients(db, recipe.Id, &recipe)
+		err = populateCustomIngredients(db, recipes[i].Id, &recipes[i])
 		if err != nil {
-			return nil, fmt.Errorf("error populating custom ingredients for recipe %d: %v", recipe.Id, err)
+			return nil, fmt.Errorf("error populating custom ingredients for recipe %d: %v", recipes[i].Id, err)
 		}
 	}
 
