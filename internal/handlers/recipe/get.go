@@ -13,13 +13,13 @@ import (
 )
 
 type recipeGetResponse struct {
-	Id                int                       `db:"id" json:"id"`
-	Name              string                    `db:"name" json:"name" binding:"required,min=1,max=100"`
-	Unit              string                    `db:"unit" json:"unit" binding:"required,min=1,max=50"`
-	Username          string                    `db:"username" json:"-"`
-	CreatedAt         time.Time                 `db:"created_at" json:"created_at"`
-	Ingredients       []models.Ingredient       `db:"-" json:"ingredients"`
-	CustomIngredients []models.CustomIngredient `db:"-" json:"custom_ingredients"`
+	Id                int                       `json:"id"`
+	Name              string                    `json:"name" binding:"required,min=1,max=100"`
+	Unit              string                    `json:"unit" binding:"required,min=1,max=50"`
+	Username          string                    `json:"-"`
+	CreatedAt         time.Time                 `json:"created_at"`
+	Ingredients       []models.Ingredient       `json:"ingredients"`
+	CustomIngredients []models.CustomIngredient `json:"custom_ingredients"`
 }
 
 func mapToRecipeGetResponse(r models.Recipe) recipeGetResponse {
