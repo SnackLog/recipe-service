@@ -44,7 +44,7 @@ const docTemplate = `{
                         "schema": {
                             "type": "array",
                             "items": {
-                                "$ref": "#/definitions/models.Recipe"
+                                "$ref": "#/definitions/recipe.recipeGetResponse"
                             }
                         }
                     },
@@ -351,6 +351,43 @@ const docTemplate = `{
                     "items": {
                         "$ref": "#/definitions/models.CustomIngredient"
                     }
+                },
+                "ingredients": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/models.Ingredient"
+                    }
+                },
+                "name": {
+                    "type": "string",
+                    "maxLength": 100,
+                    "minLength": 1
+                },
+                "unit": {
+                    "type": "string",
+                    "maxLength": 50,
+                    "minLength": 1
+                }
+            }
+        },
+        "recipe.recipeGetResponse": {
+            "type": "object",
+            "required": [
+                "name",
+                "unit"
+            ],
+            "properties": {
+                "created_at": {
+                    "type": "string"
+                },
+                "custom_ingredients": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/models.CustomIngredient"
+                    }
+                },
+                "id": {
+                    "type": "integer"
                 },
                 "ingredients": {
                     "type": "array",
