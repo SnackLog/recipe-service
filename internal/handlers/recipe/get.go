@@ -4,11 +4,42 @@ import (
 	"log"
 	"net/http"
 	"strings"
+	"time"
 
+	"github.com/SnackLog/recipe-service/internal/database/models"
 	"github.com/SnackLog/recipe-service/internal/database/recipes"
 	"github.com/SnackLog/recipe-service/internal/handlers"
 	"github.com/gin-gonic/gin"
 )
+
+type recipeGetResponse struct {
+	Id                int                       `json:"id"`
+	Name              string                    `json:"name" binding:"required,min=1,max=100"`
+	Unit              string                    `json:"unit" binding:"required,min=1,max=50"`
+	Username          string                    `json:"-"`
+	CreatedAt         time.Time                 `json:"created_at"`
+	Ingredients       []models.Ingredient       `json:"ingredients"`
+	CustomIngredients []models.CustomIngredient `json:"custom_ingredients"`
+}
+
+func mapToRecipeGetResponse(r models.Recipe) recipeGetResponse {
+	return recipeGetResponse{
+		Id:                r.Id,
+		Name:              r.Name,
+		Unit:              r.Unit,
+		Username:          r.Username,
+		CreatedAt:         r.CreatedAt,
+		Ingredients:       r.Ingredients,
+		CustomIngredients: r.CustomIngredients,
+	}
+}
+func mapToRecipeGetResponseList(recipes []models.Recipe) []recipeGetResponse {
+	responseList := make([]recipeGetResponse, len(recipes))
+	for i, r := range recipes {
+		responseList[i] = mapToRecipeGetResponse(r)
+	}
+	return responseList
+}
 
 // GetRecipes godoc
 // @Summary      Search recipes
@@ -16,7 +47,7 @@ import (
 // @Tags         recipes
 // @Produce      json
 // @Param        q   query   string  false  "Search query (minimum 3 characters)"
-// @Success      200 {array}  models.Recipe
+// @Success      200 {array}  recipeGetResponse
 // @Failure      400 {object} handlers.Error
 // @Failure      500 {object} handlers.Error
 // @Security 	 ApiKeyAuth
@@ -32,7 +63,7 @@ func (rc *RecipeController) Get(c *gin.Context) {
 			c.JSON(http.StatusInternalServerError, handlers.Error{Error: "Failed to get latest recipes"})
 			return
 		}
-		c.JSON(http.StatusOK, recipeList)
+		c.JSON(http.StatusOK, mapToRecipeGetResponseList(recipeList))
 		return
 	}
 
@@ -48,6 +79,6 @@ func (rc *RecipeController) Get(c *gin.Context) {
 		return
 	}
 
-	c.JSON(http.StatusOK, recipes)
+	c.JSON(http.StatusOK, mapToRecipeGetResponseList(recipes))
 
 }

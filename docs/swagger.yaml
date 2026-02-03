@@ -51,6 +51,32 @@ definitions:
     - name
     - unit
     type: object
+  recipe.recipeGetResponse:
+    properties:
+      created_at:
+        type: string
+      custom_ingredients:
+        items:
+          $ref: '#/definitions/models.CustomIngredient'
+        type: array
+      id:
+        type: integer
+      ingredients:
+        items:
+          $ref: '#/definitions/models.Ingredient'
+        type: array
+      name:
+        maxLength: 100
+        minLength: 1
+        type: string
+      unit:
+        maxLength: 50
+        minLength: 1
+        type: string
+    required:
+    - name
+    - unit
+    type: object
   recipe.recipePostResponse:
     properties:
       recipe_id:
@@ -78,7 +104,7 @@ paths:
           description: OK
           schema:
             items:
-              $ref: '#/definitions/models.Recipe'
+              $ref: '#/definitions/recipe.recipeGetResponse'
             type: array
         "400":
           description: Bad Request
